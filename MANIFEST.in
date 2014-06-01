@@ -1,0 +1,10 @@
+include LICENSE-BSD README.md requirements.txt
+recursive-include md2pdf  *.py
+recursive-include md2pdf/res *
+recursive-exclude md2pdf .*.swp
+recursive-exclude md2pdf .*.swo
+recursive-exclude md2pdf *.pyc
+recursive-exclude venv *
+recursive-exclude dist *
+recursive-exclude build *
+recursive-exclude md2pdf.egg-info *
