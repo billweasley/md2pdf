@@ -11,6 +11,7 @@
         '<h1>markdown string</h1>'
 """
 
+import os
 
 import houdini
 import misaka
@@ -45,6 +46,12 @@ class MarkdownRenderer(HtmlRenderer, SmartyPants):
 
         formatter = HtmlFormatter()
         return highlight(text, lexer, formatter)
+
+    def image(link, title, alt):
+        """return abs path of images"""
+        if not link.startswith(('http://', 'https://')):
+            link = os.path.abspath(link)
+        return '<img src="%s" title="%s" alt="%s" />' % (link, title, alt)
 
 
 class Parser(object):
