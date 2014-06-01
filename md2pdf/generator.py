@@ -31,6 +31,9 @@ class Generator(object):
         if stylesheet is None:
             stylesheet = self.default_stylesheet
 
+        style = open(stylesheet).read()
+        style = style.decode(charset)
+
         # update the output path if not output
         if output is None:
             # default: filename.pdf
@@ -50,7 +53,7 @@ class Generator(object):
         html = parser.parse(markdown)
 
         # render with template
-        html = renderer.render(html=html, stylesheet=stylesheet)
+        html = renderer.render(html=html, style=style)
 
         # open a process to generate pdf
         proc = subprocess.Popen(self.commands, stdin=subprocess.PIPE,

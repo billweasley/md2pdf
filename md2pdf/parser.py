@@ -47,7 +47,7 @@ class MarkdownRenderer(HtmlRenderer, SmartyPants):
         formatter = HtmlFormatter()
         return highlight(text, lexer, formatter)
 
-    def image(link, title, alt):
+    def image(self, link, title, alt):
         """return abs path of images"""
         if not link.startswith(('http://', 'https://')):
             link = os.path.abspath(link)
