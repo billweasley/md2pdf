@@ -27,6 +27,8 @@ from md2pdf import charset
 class MarkdownRenderer(HtmlRenderer, SmartyPants):
     """misaka renderer with color codes feature"""
 
+    source_path = None
+
     def _code_no_lexer(self, text):
         # encoding to utf8 string
         text = text.encode(charset).strip()
@@ -50,7 +52,8 @@ class MarkdownRenderer(HtmlRenderer, SmartyPants):
     def image(self, link, title, alt):
         """return abs path of images"""
         if not link.startswith(('http://', 'https://')):
-            link = os.path.abspath(link)
+            source_dir = os.path.dirname(self.source_path)
+            link = os.path.abspath(os.path.join(source_dir, link))
         return '<img src="%s" title="%s" alt="%s" />' % (link, title, alt)
 
 
@@ -66,10 +69,14 @@ class Parser(object):
         extensions = (misaka.EXT_FENCED_CODE |
                       misaka.EXT_NO_INTRA_EMPHASIS |
                       misaka.EXT_AUTOLINK)
+        self.renderer = renderer
         self.markdown = misaka.Markdown(renderer, extensions=extensions)
 
     def parse(self, markdown_string):
         return self.markdown.render(markdown_string)
+
+    def set_source_path(self, filepath):
+        self.renderer.source_path = filepath
 
 
 parser = Parser()

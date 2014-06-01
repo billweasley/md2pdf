@@ -50,6 +50,7 @@ class Generator(object):
         markdown = markdown.decode(charset)
 
         # parse markdown
+        parser.set_source_path(filepath)
         html = parser.parse(markdown)
 
         # render with template
