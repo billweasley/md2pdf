@@ -12,3 +12,5 @@ __version__ = '0.0.1'
 
 
 charset = 'utf8'  # utf8 everywhere!
+template = 'template.html'
+default_stylesheet = 'default_style.css'
