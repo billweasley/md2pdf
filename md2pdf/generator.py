@@ -26,6 +26,7 @@ class Generator(object):
     def __init__(self):
         self.commands = ['wkhtmltopdf', '-']
         self.default_stylesheet = path_to('res', default_stylesheet)
+        self.convert_to_html = False
 
     def generate(self, filepath, stylesheet=None, output=None):
         if stylesheet is None:
@@ -39,10 +40,34 @@ class Generator(object):
             # default: filename.pdf
             filename = os.path.basename(filepath)
             output = os.path.splitext(filename)[0] + '.pdf'
+
+        prefix, suffix = os.path.splitext(output)
+
+        if suffix.endswith('html'):
+            self.convert_to_html = True
+
         self.commands.append(output)
 
         start_time = time.time()  # record execute duration
 
+        # convert to html
+        html = self.generate_html(filepath, style=style)
+
+        if self.convert_to_html:
+            with open(output, 'w') as f:
+                f.write(html.encode(charset))
+        else:
+            # open a process to generate pdf
+            proc = subprocess.Popen(self.commands, stdin=subprocess.PIPE,
+                                    stdout=sys.stdout, stderr=sys.stderr)
+            stdout, stderr = proc.communicate(input=html.encode(charset))
+
+        # calc execute time
+        end_time = time.time()
+        duration = end_time - start_time
+        return (output, duration)
+
+    def generate_html(self, filepath, style=None):
         # open and read source file
         markdown = open(filepath).read()
 
@@ -56,14 +81,7 @@ class Generator(object):
         # render with template
         html = renderer.render(html=html, style=style)
 
-        # open a process to generate pdf
-        proc = subprocess.Popen(self.commands, stdin=subprocess.PIPE,
-                                stdout=sys.stdout, stderr=sys.stderr)
-        stdout, stderr = proc.communicate(input=html.encode(charset))
-        # calc execute time
-        end_time = time.time()
-        duration = end_time - start_time
-        return (output, duration)
+        return html
 
 
 generator = Generator()
