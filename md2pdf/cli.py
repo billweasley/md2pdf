@@ -6,7 +6,9 @@
 
 Options:
   -h --help         show help
-  -v --version      show version"""
+  -v --version      show version
+  -o <output>       output pdf/html path
+  -s <stylesheet>   stylesheet path"""
 
 import sys
 from docopt import docopt
@@ -19,8 +21,8 @@ def main():
     args = docopt(__doc__, version=__version__)
 
     filepath = args['<filepath>']
-    stylesheet = args['<stylesheet>']
-    output = args['<output>']
+    stylesheet = args['-s']
+    output = args['-o']
 
     if not filepath:
         sys.exit(__doc__)
