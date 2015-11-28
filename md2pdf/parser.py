@@ -73,7 +73,7 @@ class Parser(object):
         self.markdown = misaka.Markdown(renderer, extensions=extensions)
 
     def parse(self, markdown_string):
-        return self.markdown.render(markdown_string)
+        return self.markdown(markdown_string)
 
     def set_source_path(self, filepath):
         self.renderer.source_path = filepath
