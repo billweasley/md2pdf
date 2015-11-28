@@ -1,7 +1,6 @@
 # coding=utf8
 
-
-from setuptools import setup
+from setuptools import setup, find_packages
 from md2pdf import __version__
 
 
@@ -21,5 +20,5 @@ setup(
         ]
     },
     install_requires=open("requirements.txt").read().splitlines(),
-    packages=['md2pdf']
+    packages=find_packages()
 )

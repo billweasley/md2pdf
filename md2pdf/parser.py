@@ -15,16 +15,16 @@ import os
 
 import houdini
 import misaka
-from misaka import HtmlRenderer, SmartyPants
+from misaka import HtmlRenderer, smartypants
 from pygments import highlight
 from pygments.lexers import get_lexer_by_name
 from pygments.formatters import HtmlFormatter
 from pygments.util import ClassNotFound
 
-from md2pdf import charset
+from . import charset
 
 
-class MarkdownRenderer(HtmlRenderer, SmartyPants):
+class MarkdownRenderer(HtmlRenderer):
     """misaka renderer with color codes feature"""
 
     source_path = None
@@ -73,7 +73,7 @@ class Parser(object):
         self.markdown = misaka.Markdown(renderer, extensions=extensions)
 
     def parse(self, markdown_string):
-        return self.markdown.render(markdown_string)
+        return self.markdown(markdown_string)
 
     def set_source_path(self, filepath):
         self.renderer.source_path = filepath
