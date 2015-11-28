@@ -15,10 +15,10 @@ import sys
 import time
 import subprocess
 
-from md2pdf import default_stylesheet, charset
-from md2pdf.parser import parser
-from md2pdf.renderer import renderer
-from md2pdf.utils import path_to
+from . import default_stylesheet, charset
+from .parser import parser
+from .renderer import renderer
+from .utils import path_to
 
 
 class Generator(object):

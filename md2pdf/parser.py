@@ -21,10 +21,10 @@ from pygments.lexers import get_lexer_by_name
 from pygments.formatters import HtmlFormatter
 from pygments.util import ClassNotFound
 
-from md2pdf import charset
+from . import charset
 
 
-class MarkdownRenderer(HtmlRenderer, smartypants):
+class MarkdownRenderer(HtmlRenderer):
     """misaka renderer with color codes feature"""
 
     source_path = None

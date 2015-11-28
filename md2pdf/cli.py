@@ -13,8 +13,8 @@ Options:
 import sys
 from docopt import docopt
 
-from md2pdf import __version__
-from md2pdf.generator import generator
+from . import __version__
+from .generator import generator
 
 
 def main():

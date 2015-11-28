@@ -12,8 +12,8 @@
 
 from jinja2 import Environment, FileSystemLoader
 
-from md2pdf import template
-from md2pdf.utils import path_to
+from . import template
+from .utils import path_to
 
 
 class Renderer(object):
