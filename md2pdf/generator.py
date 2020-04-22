@@ -33,7 +33,6 @@ class Generator(object):
             stylesheet = self.default_stylesheet
 
         style = open(stylesheet).read()
-        style = style.decode(charset)
 
         # update the output path if not output
         if output is None:
@@ -55,12 +54,12 @@ class Generator(object):
 
         if self.convert_to_html:
             with open(output, 'w') as f:
-                f.write(html.encode(charset))
+                f.write(html)
         else:
             # open a process to generate pdf
             proc = subprocess.Popen(self.commands, stdin=subprocess.PIPE,
                                     stdout=sys.stdout, stderr=sys.stderr)
-            stdout, stderr = proc.communicate(input=html.encode(charset))
+            stdout, stderr = proc.communicate(input=html)
 
         # calc execute time
         end_time = time.time()
@@ -70,17 +69,13 @@ class Generator(object):
     def generate_html(self, filepath, style=None):
         # open and read source file
         markdown = open(filepath).read()
-
-        # cast to unicode, jinja eats only unicode
-        markdown = markdown.decode(charset)
-
+        
         # parse markdown
         parser.set_source_path(filepath)
         html = parser.parse(markdown)
-
         # render with template
         html = renderer.render(html=html, style=style)
-
+        
         return html
 
 

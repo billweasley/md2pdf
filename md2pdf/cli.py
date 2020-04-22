@@ -30,7 +30,7 @@ def main():
     try:
         results = generator.generate(
             filepath, stylesheet=stylesheet, output=output)
-    except Exception, e:
+    except Exception as e:
         sys.exit(e)
 
     message = 'output to %s (%.2fs)\n' % results
